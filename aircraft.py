@@ -3,14 +3,15 @@ import struct_weight, parasite_drag, atmosprops #type: ignore
 
 class aircraft:
 
-    MTOW = 0
-    W_fuel = 0
-    W_structure = 0
-    W_payload = 0
-    CDo = 0
-    geom = {}
+    
 
     def __init__(self, Nz, Wo):
+        self.MTOW = 0
+        self.W_fuel = 0
+        self.W_structure = 0
+        self.W_payload = 0
+        self.CDo = 0
+        self.geom = {}
         self.W_structure = struct_weight.weights(Wo, Nz)
         self.lift_drag = parasite_drag.lift_drag()
         pass
@@ -139,6 +140,11 @@ class aircraft:
     def calculate_CL_CD(self):
 
         return self.lift_drag.calculate_CL_CD(self.M_cruise, self.h_cruise, self.MTOW, self.M_critical)
+    
+
+    def get_Drag_Buildup(self):
+
+        return self.lift_drag.drag_buildup(self.M_cruise, self.h_cruise, self.MTOW, self.M_critical)
     
 
 

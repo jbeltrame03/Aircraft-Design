@@ -59,7 +59,4 @@ class study:
         plt.grid(visible=True, which="both")
         plt.title("Thrust Required & Thrust Available Verus Mach Number")
         plt.legend(["Thrust Required", "Thrust Available"])
-        plt.show()
-
-
-        
+        plt.show()        

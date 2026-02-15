@@ -22,5 +22,5 @@ class Geometry:
         return (((2/3)*self.Cr*((1 + self.getLambda() + (self.getLambda()**2))))/(1 + self.getLambda()))
     
     def getSweepChord(self, pchord):
-        return np.rad2deg(np.atan(np.tan(np.deg2rad(self.LE))-((4*(pchord-0)*(1-self.getLambda()))*(1/(self.getAspectRatio()*(1+self.getLambda()))))))
+        return np.rad2deg(np.arctan(np.tan(np.deg2rad(self.LE))-((4*(pchord-0)*(1-self.getLambda()))*(1/(self.getAspectRatio()*(1+self.getLambda()))))))
     

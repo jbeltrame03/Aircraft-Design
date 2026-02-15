@@ -4,13 +4,14 @@ import matplotlib.pyplot as plt
 
 class lift_drag:
 
-    CDo = 0
-    surfaces = {}
-    e = 0
-    k = 0
-    Sref = 0
+    
 
     def __init__(self):
+        self.CDo = 0
+        self.surfaces = {}
+        self.e = 0
+        self.k = 0
+        self.Sref = 0
         pass
     
     def set_Sref(self, Sref):
@@ -133,8 +134,10 @@ class lift_drag:
         rho = atmosprops.imperial_atmosphere(h).density()
         V = M*a_sos
         q = 0.5*rho*V*V
+        print(f"W={W}, V={V}, S={self.Sref}")
         CL = W/(q*self.Sref)
         CDi = CL*CL*self.k
+        print(f"V={V} q={q} CL={CL} CDi={CDi}")
         CDo = self.calculate_CDo(M, h)
         CDw = self.calculate_CDw(M, Mcrit)
         CD = CDo + CDi + CDw
@@ -145,6 +148,19 @@ class lift_drag:
         for i in range(len(self.surfaces)):
             if (self.surfaces.get(i+1)[0]["type"] == surf):
                 self.surfaces.get(i+1)[0][param] = value
+
+    def drag_buildup(self, M, h, W, Mcrit):
+        a_sos = atmosprops.imperial_atmosphere(h).speed_of_sound()
+        rho = atmosprops.imperial_atmosphere(h).density()
+        print(f"a={a_sos}, rho={rho}")
+        V = M*a_sos
+        q = 0.5*rho*V*V
+        CL = W/(q*self.Sref)
+        CDi = CL*CL*self.k
+        CDo = self.calculate_CDo(M, h)
+        CDw = self.calculate_CDw(M, Mcrit)
+        print(f"W={W}, V={V}, S={self.Sref}")
+        return [CDo, CDw, CDi]
     
 
 

@@ -4,8 +4,9 @@ import numpy as np
 
 class weights:
 
-    W_S = 0
+   
     def __init__(self, Wo, Nz):
+        self.W_S = 0
         self.Wo = Wo
         self.Nz = Nz
         pass
