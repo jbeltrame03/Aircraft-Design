@@ -20,6 +20,15 @@ class aircraft:
     def set_fuel_weight(self, W_f):
         self.W_fuel = W_f
 
+    def get_fuel_weight(self):
+        return self.W_fuel
+    
+    def get_structure_weight(self):
+        return self.W_structure.get_Struct_Weight()
+    
+    def get_payload_weight(self):
+        return self.W_payload
+
     def set_structure_weight(self, W_s):
         self.W_structure = W_s
 
@@ -105,6 +114,8 @@ class aircraft:
     def get_altitude(self):
         return self.h_cruise
     
+    def get_flight_param(self):
+        return [self.M_cruise, self.h_cruise, self.M_critical]
 
     def set_flight_param(self, M, h, Mcrit):
         self.M_cruise = M
@@ -136,6 +147,9 @@ class aircraft:
     def get_Dyn_Pressure(self):
         return 0.5*((atmosprops.imperial_atmosphere(self.h_cruise).speed_of_sound()*self.M_cruise)**2)*atmosprops.imperial_atmosphere(self.h_cruise).density()
     
+    def get_SFC(self):
+        return self.SFC
+
 
     def calculate_CL_CD(self):
 
