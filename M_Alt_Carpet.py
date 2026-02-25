@@ -8,7 +8,7 @@ import aircraft, analyses #type: ignore
 concept_4 = aircraft.aircraft(2.5*1.5, 670000)
 concept_4.set_weights(110000, 400000)
 concept_4.wing_geometry(94.403, 10, 47.5, 183.2, 9563.28, 3.509, .12, 0, 0.3, 1)
-concept_4.set_engine(0.578, 4, 16640, 97000)
+concept_4.set_engine(0.578, 3, 16640, 97000)
 concept_4.update_MTOW()
  
 M = [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
@@ -19,7 +19,7 @@ CDo_p = []
 CDi_p = []
 CDw_p = []
 CD_tot = []
-
+'''
 for i in M:
     #for j in h:
         concept_4.set_flight_param(i, 45000, 0.85)
@@ -64,4 +64,4 @@ fig.update_layout(
 )
 
 fig.show()
-
+'''

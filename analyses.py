@@ -32,6 +32,9 @@ class study:
         plt.show()
 
     def thrust_required(self, M_bounds, h):
+        
+
+        [M0, h0, Mcrit0] = self.configuration.get_flight_param()
 
 
         M_range = np.linspace(M_bounds[0], M_bounds[1], num=100)
@@ -48,6 +51,7 @@ class study:
 
             T2.append(thrust_model.Model(self.configuration.get_TSL()).thrust_altitude_Low_BPR_norm(M_range[i],self.configuration.get_altitude()))
 
+        self.configuration.set_flight_param(M0,h0, Mcrit0)
         plt.figure()
         plt.rcParams['savefig.dpi'] = 1200   # super high quality when saving
         plt.plot(M_range, D, linewidth=3)
@@ -61,9 +65,12 @@ class study:
 
 
     def range_integration(self, dW):
+        [M0, h0, Mcrit0] = self.configuration.get_flight_param()
+
         R = 0
         Wi = self.configuration.get_MTOW()
         Wf = Wi - self.configuration.get_fuel_weight()
+        print(f"Wi = {Wi}, Wf = {Wf}")
     
         W = Wi
         W_fuel = self.configuration.get_fuel_weight()
@@ -91,8 +98,12 @@ class study:
             self.configuration.set_fuel_weight(W_fuel)
             self.configuration.update_MTOW()
             #print(W_fuel)
-        
+
+        self.configuration.set_flight_param(M0,h0, Mcrit0)
+
         self.configuration.set_fuel_weight(Wi-Wf)
+        self.configuration.update_MTOW()
+        print(self.configuration.get_MTOW())
         
         print(f"Range by Integration = {np.ceil(R/5280/1.151)} nmi")
         plt.figure()
@@ -132,5 +143,51 @@ class study:
 
  
         plt.show()
+
+
+    def drag_buildup(self, M_bounds, h):
+
+
+        M_range = np.linspace(M_bounds[0], M_bounds[1], num=100)
+
+        CD_t = []
+        CDo_p = []
+        CDi_p = []
+        CDw_p = []
+        Mcrit = 0.85
+
+        for i in range(len(M_range)):
+            self.configuration.set_flight_param(M_range[i], h, Mcrit)
+            [CDo, CDw, CDi] = self.configuration.get_Drag_Buildup()
+            CD_t.append(CDo+CDw+CDi)
+            CDo_p.append(CDo)
+            CDi_p.append(CDi)
+            CDw_p.append(CDw)
+   
+
+        plt.figure()
+        print(f"Minimum: CDo={min(CDo_p)} CD={min(CD_t)} CDi={min(CDi_p)}")
+        plt.rcParams['savefig.dpi'] = 1200   # super high quality when saving
+        plt.plot(M_range, CD_t, linewidth=3)
+        plt.plot(M_range, CDi_p, linewidth=3)
+        plt.plot(M_range, CDw_p, linewidth=3)
+        plt.plot(M_range, CDo_p, linewidth=3)
+        plt.xlabel("Mach")
+        plt.ylabel("Drag Coefficient")
+        plt.grid(visible=True, which="both")
+        plt.title("Drag Coefficient Build Up")
+        plt.legend(["CD", "CDi", "CDw", "CDo"])
+        plt.show()  
+
+
+    def thrust_model(self, model, upper_alt):
+
+
+        alt = np.linspace(0, upper_alt, num=100)
+        T = []
+        for i in alt:
+            T.append(thrust_model.Model(self.configuration.get_TSL()).thrust_altitude_Low_BPR_norm(M_range[i],self.configuration.get_altitude()))
+
+
 
     

@@ -150,6 +150,16 @@ class aircraft:
     def get_SFC(self):
         return self.SFC
 
+    def add_winglet(self, h_winglet):
+        AR = self.get_Wing_Param("WING", "AR")
+        b = self.get_Wing_Param("WING", "b")
+        AR_eff = AR*((1+(h_winglet/b))**2)
+        self.set_Param("WING", "AR", AR_eff)
+        self.lift_drag.update_Param("WING", "AR", AR_eff)
+        self.lift_drag.set_Oswalds(self.get_Wing_Param("WING", "LE"), AR_eff)
+
+
+
 
     def calculate_CL_CD(self):
 

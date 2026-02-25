@@ -124,6 +124,8 @@ class weights:
     
     def add_misc(self, W_elem):
         self.W_S += W_elem
-
+    
+    def reset_weight(self):
+        self.W_S = 0
 
 

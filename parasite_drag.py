@@ -134,8 +134,10 @@ class lift_drag:
         rho = atmosprops.imperial_atmosphere(h).density()
         V = M*a_sos
         q = 0.5*rho*V*V
+        print(f"q={q} W={W} S={self.Sref}")
         CL = W/(q*self.Sref)
         CDi = CL*CL*self.k
+        print(f"CL={CL}, CDi={CDi}")
         CDo = self.calculate_CDo(M, h)
         CDw = self.calculate_CDw(M, Mcrit)
         CD = CDo + CDi + CDw

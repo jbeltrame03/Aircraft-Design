@@ -39,7 +39,7 @@ class Model:
     
     def thrust_altitude_Low_BPR_norm(self, M, h):
 
-        throttle = self.TR(M, 40000)
+        throttle = 1
 
         gamma = 1.4 
 
