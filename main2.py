@@ -14,16 +14,16 @@ concept_5.set_engine(0.578, 2, 3163, 20187)
 
 concept_5.update_MTOW()
 
-print(f"MTOW Concept 5={concept_5.get_MTOW()} lbs")
-concept_5.set_flight_param(0.9, 40000, 0.95)
+print(f"MTOW Concept 5={concept_4.get_MTOW()} lbs")
+concept_4.set_flight_param(0.9, 40000, 0.95)
 
-[CL, CD] = (concept_5.calculate_CL_CD())
+[CL, CD] = (concept_4.calculate_CL_CD())
 print(f"L/D={CL/CD}")
 
 
-analysis = analyses.study(concept_5)
+analysis = analyses.study(concept_4)
 
 analysis.thrust_required([0.7, 1], 40000)
-#analysis.range_integration(-200)
-#analysis.fuel_sensitivity([0,1000000])
+analysis.range_integration(-200)
+analysis.fuel_sensitivity([0,1000000])
 analysis.drag_buildup([0.7, 1.0], 40000)
