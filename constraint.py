@@ -118,6 +118,11 @@ T_W_cruise2 = cruise_speed(cruise_alt, Tsl, 0.8, W_S, CDo, AR, e)
 T_W_cruise3 = cruise_speed(cruise_alt, Tsl, 0.9, W_S, CDo, AR, e)
 
 plt.plot(W_S, T_W_takeoff, lw=2)
+min1 = min(T_W_cruise1)
+min2 = min(T_W_cruise2)
+min3 = min(T_W_cruise3)
+print(f"T/W M=0.7={min1}, T/W M=0.8={min2}, T/W M=0.9{min3}, ")
+
 plt.plot(W_S, T_W_cruise1, lw=2)
 plt.plot(W_S, T_W_cruise2, lw=2)
 plt.plot(W_S, T_W_cruise3, lw=2)
