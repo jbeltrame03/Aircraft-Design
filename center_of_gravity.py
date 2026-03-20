@@ -27,3 +27,6 @@ class CG:
     def get_XCG(self):
 
         return self.XCG
+    
+
+concept_CG = CG()

@@ -53,6 +53,12 @@ def rate_of_climb(h, Tsl, Mcr, W_S, CDo, AR, e, ROC):
     T_W = (beta/alpha)*((K1*(beta/q)*W_S)+K2+((CDo+CDR)/((beta/q)*W_S))+((ROC/60)/Vcr))
     return T_W
 
+
+
+
+
+
+
 plt.figure()
 plt.rcParams['savefig.dpi'] = 1200   # super high quality when saving
 ###############################################################################################
@@ -105,11 +111,16 @@ ROC = 4000 #FPM
 ###############################################################################################
 
 T_W_takeoff = Takeoff_roll(CLmax, W_S, Sg, h)
-T_W_cruise = cruise_speed(cruise_alt, Tsl, Mcr, W_S, CDo, AR, e)
+T_W_cruise1 = cruise_speed(cruise_alt, Tsl, 0.7, W_S, CDo, AR, e)
+
+T_W_cruise2 = cruise_speed(cruise_alt, Tsl, 0.8, W_S, CDo, AR, e)
+
+T_W_cruise3 = cruise_speed(cruise_alt, Tsl, 0.9, W_S, CDo, AR, e)
 
 plt.plot(W_S, T_W_takeoff, lw=2)
-plt.plot(W_S, T_W_cruise, lw=2)
-
+plt.plot(W_S, T_W_cruise1, lw=2)
+plt.plot(W_S, T_W_cruise2, lw=2)
+plt.plot(W_S, T_W_cruise3, lw=2)
 
 plt.ylim([0,1])
 plt.xlabel("W_TO/S [lb/ft^2]")
@@ -123,7 +134,7 @@ plt.scatter(B_1_WS, B_1_TW)
 plt.scatter(B_1_WS, B_1_TW_AB)
 plt.scatter(B_58_WS, B_58_TW)
 plt.scatter(B_58_WS, B_58_TW_AB)
-plt.legend(["Takeoff Requirements","Cruise Requirements","B-52", "B-1 (no Afterburner)", "B-1 (Afterburner)", "B-58 (no Afterburner)", "B-58 (Afterburner)"], loc="upper left")
+plt.legend(["Takeoff Requirements","Cruise Requirements M = 0.7","Cruise Requirements M = 0.8","Cruise Requirements M = 0.9","B-52", "B-1 (no Afterburner)", "B-1 (Afterburner)", "B-58 (no Afterburner)", "B-58 (Afterburner)"], loc="upper left")
 plt.title("B-72 Constraint Diagram")
  
 plt.show()
