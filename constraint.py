@@ -24,7 +24,7 @@ def cruise_speed(h, Tsl, Mcr, W_S, CDo, AR, e):
     CDR = K2 = 0 #constant speed + alt cruise
     alpha = T/Tsl
     print(alpha)
-    alpha = 0.3
+    alpha = 0.25
     beta = 0.95
     k_prime = 1/(np.pi*AR*e)
     k_prime_prime = 0.03
@@ -117,15 +117,24 @@ T_W_cruise2 = cruise_speed(cruise_alt, Tsl, 0.8, W_S, CDo, AR, e)
 
 T_W_cruise3 = cruise_speed(cruise_alt, Tsl, 0.9, W_S, CDo, AR, e)
 
-plt.plot(W_S, T_W_takeoff, lw=2)
 min1 = min(T_W_cruise1)
 min2 = min(T_W_cruise2)
 min3 = min(T_W_cruise3)
 print(f"T/W M=0.7={min1}, T/W M=0.8={min2}, T/W M=0.9{min3}, ")
 
-plt.plot(W_S, T_W_cruise1, lw=2)
-plt.plot(W_S, T_W_cruise2, lw=2)
-plt.plot(W_S, T_W_cruise3, lw=2)
+x1 = W_S[np.where(T_W_cruise1==min1)]
+x2 = W_S[np.where(T_W_cruise2==min2)]
+x3 = W_S[np.where(T_W_cruise3==min3)]
+print(x1, x2, x3)
+
+plt.plot(W_S, T_W_cruise1, lw=2, color="orange")
+plt.plot(W_S, T_W_cruise2, lw=2, color="green")
+plt.plot(W_S, T_W_cruise3, lw=2, color="red")
+
+plt.scatter(x1, min1, marker="*", s=200, color="orange")
+plt.scatter(x2, min2, marker="*", s=200, color="green")
+plt.scatter(x3, min3, marker="*", s=200, color="red")
+plt.plot(W_S, T_W_takeoff, lw=2)
 
 plt.ylim([0,1])
 plt.xlabel("W_TO/S [lb/ft^2]")
@@ -139,7 +148,8 @@ plt.scatter(B_1_WS, B_1_TW)
 plt.scatter(B_1_WS, B_1_TW_AB)
 plt.scatter(B_58_WS, B_58_TW)
 plt.scatter(B_58_WS, B_58_TW_AB)
-plt.legend(["Takeoff Requirements","Cruise Requirements M = 0.7","Cruise Requirements M = 0.8","Cruise Requirements M = 0.9","B-52", "B-1 (no Afterburner)", "B-1 (Afterburner)", "B-58 (no Afterburner)", "B-58 (Afterburner)"], loc="upper left")
+plt.legend(["Cruise Requirements M = 0.7","Cruise Requirements M = 0.8","Cruise Requirements M = 0.9", "Min T/W @ M=0.7", 
+            "Min T/W @ M=0.8", "Min T/W @ M=0.9","Takeoff Requirements","B-52", "B-1 (no Afterburner)", "B-1 (Afterburner)", "B-58 (no Afterburner)", "B-58 (Afterburner)"], loc="upper right", ncol=2)
 plt.title("B-72 Constraint Diagram")
  
 plt.show()
