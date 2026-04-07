@@ -24,3 +24,7 @@ class Geometry:
     def getSweepChord(self, pchord):
         return np.rad2deg(np.arctan(np.tan(np.deg2rad(self.LE))-((4*(pchord-0)*(1-self.getLambda()))*(1/(self.getAspectRatio()*(1+self.getLambda()))))))
     
+    def get_Y_X_bar(self):
+        y_bar = (self.b/6) * (1+(2*self.getLambda())) * (1/(1+self.getLambda()))
+        x_bar = y_bar * math.tan(math.radians(self.LE))
+        return [y_bar, x_bar]

@@ -127,6 +127,7 @@ class lift_drag:
     def set_Oswalds(self, LE, AR):
         self.e = (4.61*(1-(0.045*(AR**0.68)))*((np.cos(np.deg2rad(LE)))**0.15))-3.1
         self.k = 1/(np.pi*self.e*AR)
+        #print(f"e={self.e} AR={AR}")
 
     
     def calculate_CL_CD(self, M, h, W, Mcrit):
@@ -155,6 +156,7 @@ class lift_drag:
         V = M*a_sos
         q = 0.5*rho*V*V
         CL = W/(q*self.Sref)
+        #print(f"S={self.Sref} W={W}")
         CDi = CL*CL*self.k
         CDo = self.calculate_CDo(M, h)
         CDw = self.calculate_CDw(M, Mcrit)

@@ -128,4 +128,8 @@ class weights:
     def reset_weight(self):
         self.W_S = 0
 
-
+    def set_composites(self, Bool):
+        if Bool:
+            self.W_S = self.W_S*0.75
+        else:
+            pass

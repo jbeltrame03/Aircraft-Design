@@ -70,16 +70,17 @@ class study:
         R = 0
         Wi = self.configuration.get_MTOW()
         Wf = Wi - self.configuration.get_fuel_weight()
-        print(f"Wi = {Wi}, Wf = {Wf}")
+        W_fuel = self.configuration.get_fuel_weight()
+        print(f"Wi = {Wi}, Wf = {Wf} Wfuel = {W_fuel}")
     
         W = Wi
-        W_fuel = self.configuration.get_fuel_weight()
         [M, h, Mcrit] = self.configuration.get_flight_param()
         V = (atmosprops.imperial_atmosphere(h).speed_of_sound()*M)
         
         R_p = []
         W_plot = []
         Sw = self.configuration.get_Wing_Param("WING", "Area")
+        print(Sw)
         
         while W > Wf:
             
@@ -88,6 +89,7 @@ class study:
             CD = CDi + CDo + CDw
             D = q*CD*Sw
             T = D
+            print(T)
             W_dot = (self.configuration.get_SFC()/3600)*T
             R += ((V/W_dot)*abs(dW))
             #print(f"R={R}, V={V} T={T}")
@@ -103,7 +105,7 @@ class study:
 
         self.configuration.set_fuel_weight(Wi-Wf)
         self.configuration.update_MTOW()
-        print(self.configuration.get_MTOW())
+        #print(self.configuration.get_MTOW())
         
         print(f"Range by Integration = {np.ceil(R/5280/1.151)} nmi")
         plt.figure()
@@ -146,6 +148,7 @@ class study:
 
 
     def drag_buildup(self, M_bounds, h):
+        [M0, h0, Mcrit0] = self.configuration.get_flight_param()
 
 
         M_range = np.linspace(M_bounds[0], M_bounds[1], num=100)
@@ -163,7 +166,9 @@ class study:
             CDo_p.append(CDo)
             CDi_p.append(CDi)
             CDw_p.append(CDw)
-   
+
+        self.configuration.set_flight_param(M0,h0, Mcrit0)
+
 
         plt.figure()
         print(f"Minimum: CDo={min(CDo_p)} CD={min(CD_t)} CDi={min(CDi_p)}")

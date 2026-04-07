@@ -103,9 +103,9 @@ N_engine = 4
 T_engine = 97000
 Tsl = N_engine*T_engine
 Mcr = 0.85
-CDo = 0.015
-AR = 8
-e = 0.7
+CDo = 0.0106
+AR = 6.252
+e = 0.636
 ROC = 4000 #FPM
 
 ###############################################################################################
@@ -120,7 +120,7 @@ T_W_cruise3 = cruise_speed(cruise_alt, Tsl, 0.9, W_S, CDo, AR, e)
 min1 = min(T_W_cruise1)
 min2 = min(T_W_cruise2)
 min3 = min(T_W_cruise3)
-print(f"T/W M=0.7={min1}, T/W M=0.8={min2}, T/W M=0.9{min3}, ")
+print(f"T/W M=0.7.....{min1}\nT/W M=0.8.....{min2}\nT/W M=0.9.....{min3}\n ")
 
 x1 = W_S[np.where(T_W_cruise1==min1)]
 x2 = W_S[np.where(T_W_cruise2==min2)]

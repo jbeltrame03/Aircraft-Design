@@ -1,4 +1,4 @@
-import struct_weight, parasite_drag, atmosprops #type: ignore
+import struct_weight, parasite_drag, atmosprops, center_of_gravity #type: ignore
 
 
 class aircraft:
@@ -14,8 +14,12 @@ class aircraft:
         self.geom = {}
         self.W_structure = struct_weight.weights(Wo, Nz)
         self.lift_drag = parasite_drag.lift_drag()
+        self.CG = center_of_gravity.CG()
         pass
 
+
+    def composites_struct(self, Bool):
+        self.W_structure.set_composites(Bool)
 
     def set_fuel_weight(self, W_f):
         self.W_fuel = W_f
@@ -42,7 +46,6 @@ class aircraft:
         self.W_fuel = W_f
         self.W_payload = W_p
         self.MTOW = self.W_structure.get_Struct_Weight() + W_f + W_p
-        print(self.MTOW)
 
     def update_MTOW(self):
         self.MTOW = self.W_fuel + self.W_structure.get_Struct_Weight() + self.W_payload
@@ -71,6 +74,7 @@ class aircraft:
         self.W_structure.add_wing(Cr, Ct, t_c, LE, b, 0.3*(Cr+Ct)*0.5, 0.4*b)
         self.lift_drag.set_Sref(Sw)
         self.lift_drag.set_Wing_Geometry(Cr, Ct, Swet, t_c, xc_max, LE, b, num_elem)
+        
     
     def vertical_stab_geometry(self, Cr, Ct, LE, b, t_c, Swet, xc_max, num_elem, Lv, T_tail):
         Sw = 0.5*(Cr+Ct)*b
@@ -88,6 +92,7 @@ class aircraft:
         self.geom.setdefault(num_elem, []).append(surface)
         self.W_structure.add_VT(T_tail, Lv, Cr, Ct, b, LE, t_c)
         self.lift_drag.set_Wing_Geometry(Cr, Ct, Swet, t_c, xc_max, LE, b, num_elem)
+
 
     def fuselage_geometry(self, Lf, Df, Swet, num_elem, Crw, Ctw, bw, LEw):
 

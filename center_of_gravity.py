@@ -1,3 +1,5 @@
+import aircraft, analyses, HLS_geom
+
 '''
 
 Calculates and returns the X ordinate of the center of gravity of the aircraft
@@ -17,12 +19,11 @@ class CG:
         
         self.MTOW += W
         self.moment = W*X
+        self.XCG = (self.moment/(self.MTOW))
     
 
     def calc_XCG(self):
-
         self.XCG = (self.moment/(self.MTOW))
-    
 
     def get_XCG(self):
 
